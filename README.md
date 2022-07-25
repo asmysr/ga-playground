@@ -40,4 +40,4 @@
 
 - Github Action Workflow Result:
 
-![github](\assets\workflow_results.png)
+![github](/assets/workflow_results.png)
