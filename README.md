@@ -11,6 +11,7 @@
     - [Pros](#pros)
     - [Cons](#cons)
   - [Results](#results)
+  - [Acknowledgement](#acknowledgement)
 
 ## Purpose
 
@@ -20,11 +21,12 @@
 
 ## How-To 
 
-- to be updated.
+- Build, Test, Deploy.
+- More scenarios need to be discovered: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
 
 ## Findings
 
-- to be updated.
+- What happens after commits can be automated with "Events", this triggers a workflow, it can be at the scheduled time or when an event outside of GitHub occurs.
 
 ## Pros & Cons
 
@@ -40,4 +42,8 @@
 
 - Github Action Workflow Result:
 
-![github](\assets\workflow_results.png)
+![github](/assets/workflow_results.png)
+
+## Acknowledgement
+
+- Thank you Awesome Actions https://github.com/sdras/awesome-actions 
