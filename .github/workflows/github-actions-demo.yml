@@ -19,4 +19,4 @@ jobs:
               project_id: ${{ secrets.GCP_PROJECT_ID }}
               export_default_credentials: true 
       - name: deploy the python function
-        run: gcloud functions deploy lefunc --trigger-http --runtime=python39
+        run: gcloud functions deploy helloworld --trigger-http --runtime=python39
