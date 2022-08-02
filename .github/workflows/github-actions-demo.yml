@@ -1,12 +1,34 @@
+# TODO: Deploying 2 Different Environment
+# TODO: Deploying 2 Different Deployment Based On Folder
+# TODO: Deploy only if conditions are met
+
 name: GitHub Actions Demo On The Playground
 on: 
-    push:
-      branches: [ main ]
-    pull_request:
-      branches: [ main ]
+    # push:
+    #   branches: [ main ]
+    # pull_request:
+    #   branches: [ main ]
     workflow_dispatch:
     
 jobs:
+  deploy-staging:
+    name: Deploy to staging
+    environment:
+      name: Staging Environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy to staging environment
+  
+  deploy-production:
+    name: Deploy to production
+    environment:
+      name: Production Environment
+    needs: [deploy-staging]
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy to production environment
+
+
   build:
     runs-on: ubuntu-latest
     steps: 
