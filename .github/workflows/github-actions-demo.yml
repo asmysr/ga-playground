@@ -1,14 +1,6 @@
 name: Github Actions Playground POC
 
 on:
-  push:
-    branches: [ master ]
-    paths:
-      - "rex/universal-rocketeer-directory/pto/**"
-  pull_request:
-    branches: [ master ]
-    paths:
-      - "rex/universal-rocketeer-directory/pto/**"
   workflow_dispatch:
 
 jobs:
@@ -28,13 +20,13 @@ jobs:
       - name: Configure GCP Auth
         uses: google-github-actions/auth@v0
         with:
-          credentials_json: ${{ secrets.process_286_serverless }}
-          service_account: "serverless@it-urd.iam.gserviceaccount.com"
+          credentials_json: ${{ secrets.GCP_SA_KEY}} # credentials are inside Github Actions Settings
+          service_account: ${{secrets.GCP_SA_EMAIL}}
 
       - name: Deploy to GCF
         run: |
-          cd ./rex/universal-rocketeer-directory/pto
+          cd .
           cat >> credentials.json << EOF
-          ${{ secrets.process_286_serverless }}
+          ${{ secrets.GCP_SA_KEY }}
           EOF
           sls deploy
