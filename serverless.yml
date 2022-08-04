@@ -31,7 +31,7 @@ package:
 
 functions:
   first:
-    handler: elloworld
+    handler: welloworld
     events:
       - http: path
   # NOTE: the following uses an "event" event (pubSub event in this case).
