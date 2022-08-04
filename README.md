@@ -28,6 +28,10 @@
 ## Findings
 
 - What happens after commits can be automated with "Events", this triggers a workflow, it can be at the scheduled time or when an event outside of GitHub occurs.
+- For Different Github Environments, there is a need to use github.ref where it would be 
+- if: ${{github.ref == 'refs/heads/main'}} for main
+- if: ${{github.ref == 'refs/heads/develop}} for staging
+- there maybe a lot of duplicated code but it is more reliable
 
 ## Pros & Cons
 
