@@ -1,4 +1,4 @@
-def http(request):
+def elloworld(request):
     """Responds to any HTTP request.
     Args:
         request (flask.Request): HTTP request object.
