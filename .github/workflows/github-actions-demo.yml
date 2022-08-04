@@ -18,33 +18,9 @@ jobs:
     steps:
       - name: deploy to staging environment
         working-directory: bye # certain deployment for certain folder
-      - uses: actions/checkout@v2
-      - name: set up gcloud Cloud SDK environment
-        uses: google-github-actions/setup-gcloud@v0.2.0
+      - name: Serverless
+        uses: serverless/github-action@v1.53.0
         with:
-              service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-              service_account_key: ${{ secrets.GCP_SA_KEY }}
-              project_id: ${{ secrets.GCP_PROJECT_ID }}
-              export_default_credentials: false # if true, the credentials will appear in GCP
-      - name: deploy the python function
-        run: gcloud functions deploy byeworld --trigger-http --runtime=python39
-  
-  deploy-production:
-    name: Deploy to production
-    environment:
-      name: Production Environment
-    needs: [deploy-staging] # staging for different environment
-    runs-on: ubuntu-latest
-    steps:
-      - name: deploy to production environment
-        working-directory: hello
-      - uses: actions/checkout@v2
-      - name: set up gcloud Cloud SDK environment
-        uses: google-github-actions/setup-gcloud@v0.2.0
-        with:
-              service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-              service_account_key: ${{ secrets.GCP_SA_KEY }}
-              project_id: ${{ secrets.GCP_PROJECT_ID }}
-              export_default_credentials: false # if true, the credentials will appear in GCP
-      - name: deploy the python function
-        run: gcloud functions deploy helloworld --trigger-http --runtime=python39
+         args: deploy
+        env:
+         SERVERLESS_ACCESS_KEY: ${{secrets.SERVERLESS_ACCESS_KEY}}
