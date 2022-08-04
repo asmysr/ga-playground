@@ -1,35 +1,40 @@
-# TODO: Allocate different deployment strategy
-# TODO: Deploy only if conditions are met
-# Multi-Stage Deployments are inside the Github Action settings
+name: Github Actions Playground POC
 
-name: GitHub Actions Demo On The Playground
-on: 
-    # push:
-    #   branches: [ main ]
-    # pull_request:
-    #   branches: [ main ]
-    workflow_dispatch:
-      branches:
-        - develop
-    
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - "rex/universal-rocketeer-directory/pto/**"
+  pull_request:
+    branches: [ master ]
+    paths:
+      - "rex/universal-rocketeer-directory/pto/**"
+  workflow_dispatch:
+
 jobs:
-  deploy:
-    name: deploy to staging
-    environment:
-      name: Staging Environment # can set the environment here
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: npm install
-         run: npm install
-      - name: decrypt secrets
-         run: ./.github/scripts/decrypt_secret.sh
-         env:
-           SECRET_PASSPHRASE: ${{secrets.SECRET_PASSPHRASE}}
-      - name: Serverless deployment to staging
-        uses: serverless/github-action@v1.53.0
+      - uses: actions/checkout@v3
+
+      - name: Install Serverless Framework
+        run: npm i -g serverless
+        
+      - name: Install project dependencies
+        run: | 
+          cd ./rex/universal-rocketeer-directory/pto
+          npm i
+
+      - name: Configure GCP Auth
+        uses: google-github-actions/auth@v0
         with:
-         args: deploy
-        env:
-         SERVERLESS_ACCESS_KEY: ${{secrets.SERVERLESS_ACCESS_KEY}}
-         CREDENTIALS_PATH: /github/workspace/secrets/keyfile.json
+          credentials_json: ${{ secrets.process_286_serverless }}
+          service_account: "serverless@it-urd.iam.gserviceaccount.com"
+
+      - name: Deploy to GCF
+        run: |
+          cd ./rex/universal-rocketeer-directory/pto
+          cat >> credentials.json << EOF
+          ${{ secrets.process_286_serverless }}
+          EOF
+          sls deploy
