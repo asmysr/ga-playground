@@ -1,4 +1,4 @@
-service: ga-playground
+service: ga-playground-test
 
 provider:
   name: google
