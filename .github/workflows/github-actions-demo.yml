@@ -1,3 +1,4 @@
+# TODO: Allocate different deployment strategy
 # TODO: Deploy only if conditions are met
 # Multi-Stage Deployments are inside the Github Action settings
 
@@ -8,19 +9,27 @@ on:
     # pull_request:
     #   branches: [ main ]
     workflow_dispatch:
+      branches:
+        - develop
     
 jobs:
-  deploy-staging:
-    name: Deploy to staging
+  deploy:
+    name: deploy to staging
     environment:
       name: Staging Environment # can set the environment here
     runs-on: ubuntu-latest
     steps:
-      - name: deploy to staging environment
-        working-directory: bye # certain deployment for certain folder
-      - name: Serverless
+      - uses: actions/checkout@master
+      - name: npm install
+         run: npm install
+      - name: decrypt secrets
+         run: ./.github/scripts/decrypt_secret.sh
+         env:
+           SECRET_PASSPHRASE: ${{secrets.SECRET_PASSPHRASE}}
+      - name: Serverless deployment to staging
         uses: serverless/github-action@v1.53.0
         with:
          args: deploy
         env:
          SERVERLESS_ACCESS_KEY: ${{secrets.SERVERLESS_ACCESS_KEY}}
+         CREDENTIALS_PATH: /github/workspace/secrets/keyfile.json
