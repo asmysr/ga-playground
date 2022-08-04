@@ -5,9 +5,9 @@ on:
 
 jobs:
   dev-deploy:
-    if: github.ref == 'refs/heads/develop'
       build:
         runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/develop'
         steps:
           - uses: actions/checkout@v3
 
