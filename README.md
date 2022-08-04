@@ -15,9 +15,10 @@
 
 ## Purpose
 
-* Automate CI/CD: Build, Test & Deployment Pipeline
-* Continue build and test every pull request
-* Proof of Concept /w URD
+* Deploy to Google Cloud Function by using Serverless Framework
+* Deploy to specific environment depending on the branch: environment secrets are on the github action settings itself
+* Deploy only for the path where file changes occur
+* Deployment would not occur for negligible file changes
 
 ## How-To 
 
