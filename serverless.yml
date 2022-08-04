@@ -3,14 +3,14 @@ service: ga-playground
 provider:
   name: google
   stage: dev
-  runtime: python37
+  runtime: python38
   region: us-central1
   project: my-project
   # The GCF credentials can be a little tricky to set up. Luckily we've documented this for you here:
   # https://serverless.com/framework/docs/providers/google/guide/credentials/
   #
   # the path to the credentials file needs to be absolute
-  credentials: ${env:CREDENTIALS_PATH}
+  credentials: ./credentials.json
 
 frameworkVersion: '3'
 plugins:
@@ -26,7 +26,7 @@ package:
 
 functions:
   first:
-    handler: http
+    handler: elloworld
     events:
       - http: path
   # NOTE: the following uses an "event" event (pubSub event in this case).
