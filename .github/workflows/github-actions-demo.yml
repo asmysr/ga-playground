@@ -9,7 +9,7 @@ jobs:
       name: Deploy Production (main)
       runs-on: ubuntu-latest
       if: github.ref == 'refs/heads/main' # this deploys to different projects since it is production
-steps:
+      steps:
         - uses: actions/checkout@v3
         - uses: dorny/paths-filter@v2
           id: filter
