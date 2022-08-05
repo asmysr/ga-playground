@@ -1,3 +1,7 @@
+#TODO: Serverless Composite Specific Path
+#TODO: Only Build/Deploy if files other than specific was changed
+#TODO: Setup Github Actions Environment Secrets.
+
 name: Github Actions Playground POC
 
 on:
@@ -6,7 +10,7 @@ on:
 jobs:
     build:
       runs-on: ubuntu-latest
-      if: github.ref == 'refs/heads/develop'
+      if: github.ref == 'refs/heads/develop' # this deploys both to production since they are in staging.
       steps:
         - uses: actions/checkout@v3
 
