@@ -69,9 +69,31 @@ jobs:
             ${{ secrets.GCP_PROJECT_ID }}
             EOF
 
-        - name: Deploy to GCF
+        - name: Configure netsuite Serverless Project ID
           run: |
             cd .
+            cat >> project.yml << EOF
+            ${{ secrets.GCP_NETSUITE_PROJECTID }}
+            EOF
+
+        - name: Deploy netsuite to GCF
+          run: |
+            cd ./netsuite
+            cat >> credentials.json << EOF
+            ${{ secrets.GCP_SA_KEY }}
+            EOF
+            sls deploy
+
+        - name: Configure urd Serverless Project ID
+          run: |
+            cd .
+            cat >> project.yml << EOF
+            ${{ secrets.GCP_URD_PROJECTID }}
+            EOF
+
+        - name: Deploy urd to GCF
+          run: |
+            cd ./urd
             cat >> credentials.json << EOF
             ${{ secrets.GCP_SA_KEY }}
             EOF
