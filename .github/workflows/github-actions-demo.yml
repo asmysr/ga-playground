@@ -49,6 +49,14 @@ jobs:
       if: github.ref == 'refs/heads/develop' # this deploys both to production since they are in staging.
       steps:
         - uses: actions/checkout@v3
+        - uses: dorny/paths-filter@v2
+          id: filter
+          with:
+            filters: |
+              urd:
+                - 'urd/**'
+              netsuite:
+                - 'netsuite/**'
 
         - name: Install Serverless Framework
           run: npm i -g serverless
@@ -63,14 +71,6 @@ jobs:
             service_account: ${{secrets.GCP_SA_EMAIL}}
 
         - name: Configure Serverless Project ID
-          uses: dorny/paths-filter@v2.10.2
-          id: changes
-          with: 
-            filters: |
-              src:
-                - './**'
-          # run only if main file has been changed
-        - if: steps.changes.outputs.src == 'true'
           run: |
             cd .
             cat >> project.yml << EOF
@@ -78,14 +78,7 @@ jobs:
             EOF
 
         - name: Configure netsuite Serverless Project ID
-          uses: dorny/paths-filter@v2.10.2
-          id: changes
-          with: 
-            filters: |
-              src:
-                - './netsuite/**'
-          # run only if netsuite file has been changed
-        - if: steps.changes.outputs.src == 'true'
+          if: steps.filter.outputs.netsuite == 'true'
           run: |
             cd .
             cat >> project.yml << EOF
@@ -93,14 +86,7 @@ jobs:
             EOF
 
         - name: Deploy netsuite to GCF
-          uses: dorny/paths-filter@v2.10.2
-          id: changes
-          with: 
-            filters: |
-              src:
-                - './netsuite/**'
-          # run only if main file has been changed
-        - if: steps.changes.outputs.src == 'true'
+          if: steps.filter.outputs.netsuite == 'true'
           run: |
             cd ./netsuite
             cat >> credentials.json << EOF
@@ -109,14 +95,7 @@ jobs:
             sls deploy
 
         - name: Configure urd Serverless Project ID
-          uses: dorny/paths-filter@v2.10.2
-          id: changes
-          with: 
-            filters: |
-              src:
-                - './urd/**'
-          # run only if urd file has been changed
-        - if: steps.changes.outputs.src == 'true'
+          if: steps.filter.outputs.urd == 'true'
           run: |
             cd .
             cat >> project.yml << EOF
@@ -124,14 +103,7 @@ jobs:
             EOF
 
         - name: Deploy urd to GCF
-          uses: dorny/paths-filter@v2.10.2
-          id: changes
-          with: 
-            filters: |
-              src:
-                - './urd/**'
-          # run only if main file has been changed
-        - if: steps.changes.outputs.src == 'true'
+          if: steps.filter.outputs.urd == 'true'
           run: |
             cd ./urd
             cat >> credentials.json << EOF
