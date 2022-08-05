@@ -15,9 +15,10 @@
 
 ## Purpose
 
-* Automate CI/CD: Build, Test & Deployment Pipeline
-* Continue build and test every pull request
-* Proof of Concept /w URD
+* Deploy to Google Cloud Function by using Serverless Framework
+* Deploy to specific environment depending on the branch: environment secrets are on the github action settings itself
+* Deploy only for the path where file changes occur
+* Deployment would not occur for negligible file changes
 
 ## How-To 
 
@@ -27,6 +28,10 @@
 ## Findings
 
 - What happens after commits can be automated with "Events", this triggers a workflow, it can be at the scheduled time or when an event outside of GitHub occurs.
+- For Different Github Environments, there is a need to use github.ref where it would be 
+- if: ${{github.ref == 'refs/heads/main'}} for main
+- if: ${{github.ref == 'refs/heads/develop}} for staging
+- there maybe a lot of duplicated code but it is more reliable
 
 ## Pros & Cons
 
