@@ -1,7 +1,3 @@
-#TODO: Serverless Composite Specific Path
-#TODO: Only Build/Deploy if files other than specific was changed
-#TODO: Setup Github Actions Environment Secrets.
-
 name: Github Actions Playground POC
 
 on:
