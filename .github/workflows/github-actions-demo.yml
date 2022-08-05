@@ -27,7 +27,13 @@ jobs:
           with:
             credentials_json: ${{secrets.GCP_SA_KEY}} # credentials are inside Github Actions Settings
             service_account: ${{secrets.GCP_SA_EMAIL}}
-
+        - name: Configure Serverless Project ID
+          run: |
+            cd .
+            cat >> project.yml << EOF
+            ${{ secrets.GCP_PROJECT_ID }}
+            EOF
+        
         - name: Deploy to GCF
           run: |
             cd .
@@ -55,6 +61,13 @@ jobs:
           with:
             credentials_json: ${{secrets.GCP_SA_KEY}} # credentials are inside Github Actions Settings
             service_account: ${{secrets.GCP_SA_EMAIL}}
+
+        - name: Configure Serverless Project ID
+          run: |
+            cd .
+            cat >> project.yml << EOF
+            ${{ secrets.GCP_PROJECT_ID }}
+            EOF
 
         - name: Deploy to GCF
           run: |
