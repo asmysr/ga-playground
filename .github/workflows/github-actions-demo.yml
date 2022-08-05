@@ -9,8 +9,8 @@ on:
 
 jobs:
   deploy-production:
-    environment: Production
-    name: Deploy Production (Master)
+      environment: Production
+      name: Deploy Production (Master)
       runs-on: ubuntu-latest
       if: github.ref == 'refs/heads/master' # this deploys to different projects since it is production
       steps:
@@ -37,8 +37,8 @@ jobs:
             sls deploy
 
   deploy-staging:
-    environment: Staging
-    name: Deploy Staging (Develop)
+      environment: Staging
+      name: Deploy Staging (Develop)
       runs-on: ubuntu-latest
       if: github.ref == 'refs/heads/develop' # this deploys both to production since they are in staging.
       steps:
