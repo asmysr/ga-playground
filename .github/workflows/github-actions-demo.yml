@@ -13,8 +13,16 @@ jobs:
       name: Deploy Production (main)
       runs-on: ubuntu-latest
       if: github.ref == 'refs/heads/main' # this deploys to different projects since it is production
-      steps:
+steps:
         - uses: actions/checkout@v3
+        - uses: dorny/paths-filter@v2
+          id: filter
+          with:
+            filters: |
+              urd:
+                - 'urd/**'
+              netsuite:
+                - 'netsuite/**'
 
         - name: Install Serverless Framework
           run: npm i -g serverless
@@ -27,16 +35,43 @@ jobs:
           with:
             credentials_json: ${{secrets.GCP_SA_KEY}} # credentials are inside Github Actions Settings
             service_account: ${{secrets.GCP_SA_EMAIL}}
+
         - name: Configure Serverless Project ID
           run: |
             cd .
             cat >> project.yml << EOF
             ${{ secrets.GCP_PROJECT_ID }}
             EOF
-        
-        - name: Deploy to GCF
+
+        - name: Configure netsuite Serverless Project ID
+          if: steps.filter.outputs.netsuite == 'true'
           run: |
             cd .
+            cat >> project.yml << EOF
+            ${{ secrets.GCP_NETSUITE_PROJECTID }}
+            EOF
+
+        - name: Deploy netsuite to GCF
+          if: steps.filter.outputs.netsuite == 'true'
+          run: |
+            cd ./netsuite
+            cat >> credentials.json << EOF
+            ${{ secrets.GCP_SA_KEY }}
+            EOF
+            sls deploy
+
+        - name: Configure urd Serverless Project ID
+          if: steps.filter.outputs.urd == 'true'
+          run: |
+            cd .
+            cat >> project.yml << EOF
+            ${{ secrets.GCP_URD_PROJECTID }}
+            EOF
+
+        - name: Deploy urd to GCF
+          if: steps.filter.outputs.urd == 'true'
+          run: |
+            cd ./urd
             cat >> credentials.json << EOF
             ${{ secrets.GCP_SA_KEY }}
             EOF
