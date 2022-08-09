@@ -42,7 +42,7 @@ jobs:
         - name: Configure netsuite Serverless Project ID
           if: steps.filter.outputs.netsuite == 'true'
           run: |
-            cd .
+            cd ./netsuite
             cat >> project.yml << EOF
             ${{ secrets.GCP_NETSUITE_PROJECTID }}
             EOF
@@ -52,14 +52,14 @@ jobs:
           run: |
             cd ./netsuite
             cat >> credentials.json << EOF
-            ${{ secrets.GCP_SA_KEY }}
+            ${{ secrets.GCP_NETSUITE_KEY }}
             EOF
             sls deploy
 
         - name: Configure urd Serverless Project ID
           if: steps.filter.outputs.urd == 'true'
           run: |
-            cd .
+            cd ./urd
             cat >> project.yml << EOF
             ${{ secrets.GCP_URD_PROJECTID }}
             EOF
@@ -69,7 +69,7 @@ jobs:
           run: |
             cd ./urd
             cat >> credentials.json << EOF
-            ${{ secrets.GCP_SA_KEY }}
+            ${{ secrets.GCP_URD_KEY }}
             EOF
             sls deploy
 
