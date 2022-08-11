@@ -29,15 +29,15 @@ jobs:
         - name: Configure GCP Auth
           uses: google-github-actions/auth@v0.7.3
           with:
-            credentials_json: ${{secrets.GCP_SA_KEY}} # credentials are inside Github Actions Settings
-            service_account: ${{secrets.GCP_SA_EMAIL}}
+            credentials_json: ${{secrets.GCP_SA_PROD_KEY}} # credentials are inside Github Actions Settings
+            service_account: ${{secrets.GCP_SA_PROD_EMAIL}}
 
         - name: Configure netsuite Serverless Project ID
           if: steps.filter.outputs.netsuite == 'true'
           run: |
             cd ./netsuite
             cat >> project.yml << EOF
-            ${{ secrets.GCP_NETSUITE_PROJECTID }}
+            ${{ secrets.GCP_NETSUITE_PROJECTID_PROD }}
             EOF
 
         - name: Deploy netsuite to GCF
@@ -45,7 +45,7 @@ jobs:
           run: |
             cd ./netsuite
             cat >> credentials.json << EOF
-            ${{ secrets.GCP_NETSUITE_KEY }}
+            ${{ secrets.GCP_NETSUITE_KEY_PROD }}
             EOF
             npm install
             serverless deploy
@@ -55,7 +55,7 @@ jobs:
           run: |
             cd ./urd
             cat >> project.yml << EOF
-            ${{ secrets.GCP_URD_PROJECTID }}
+            ${{ secrets.GCP_URD_PROJECTID_PROD }}
             EOF
 
         - name: Deploy urd to GCF
@@ -63,7 +63,7 @@ jobs:
           run: |
             cd ./urd
             cat >> credentials.json << EOF
-            ${{ secrets.GCP_URD_KEY }}
+            ${{ secrets.GCP_URD_KEY_PROD }}
             EOF
             npm install
             serverless deploy
