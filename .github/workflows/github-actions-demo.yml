@@ -47,6 +47,8 @@ jobs:
             cat >> credentials.json << EOF
             ${{ secrets.GCP_NETSUITE_KEY }}
             EOF
+            npm install
+            serverless deploy
 
         - name: Configure urd Serverless Project ID
           if: steps.filter.outputs.urd == 'true'
@@ -63,6 +65,8 @@ jobs:
             cat >> credentials.json << EOF
             ${{ secrets.GCP_URD_KEY }}
             EOF
+            npm install
+            serverless deploy
 
   deploy-staging:
       environment: staging
