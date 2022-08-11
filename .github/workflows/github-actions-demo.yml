@@ -12,15 +12,16 @@ jobs:
       steps:
         - uses: actions/checkout@v3
         - uses: dorny/paths-filter@v2
-          id: changes
+          id: filter
           with:
             filters: |
               urd:
-                - 'urd/**'
+                - 'urd/main.py'
               netsuite:
-                - 'netsuite/**'
+                - 'netsuite/main.py'
 
         - name: Install Serverless Framework
+          if: steps.filter.outputs.netsuite == 'true'
           run: npm i -g serverless
         
         - name: Install GCP Cloud Functions Serverless Plug-In
