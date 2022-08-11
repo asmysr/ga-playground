@@ -7,5 +7,5 @@ def iam_netsuite_http(request):
         Response object using
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
-    return f'Hello Worldo!'
+    return f'Hello World!'
 
