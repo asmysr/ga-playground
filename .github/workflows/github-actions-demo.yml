@@ -42,7 +42,7 @@ jobs:
             ${{ secrets.GCP_NETSUITE_KEY_PROD }}
             EOF
             npm install
-            serverless deploy
+            serverless deploy --verbose
 
         - name: Configure urd Serverless Project ID
           if: steps.filter.outputs.urd == 'true'
