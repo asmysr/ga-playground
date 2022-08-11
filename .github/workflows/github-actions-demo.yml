@@ -16,9 +16,9 @@ jobs:
           with:
             filters: |
               urd:
-                - 'urd/main.py'
+                - modified:'urd/main.py'
               netsuite:
-                - 'netsuite/main.py'
+                - modified:'netsuite/main.py'
 
         - name: Install Serverless Framework
           if: steps.filter.outputs.netsuite == 'true'
