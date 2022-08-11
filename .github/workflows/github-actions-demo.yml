@@ -16,14 +16,16 @@ jobs:
           with:
             filters: |
               urd:
-                - modified:'urd/main.py'
+                - 'urd/main.py'
               netsuite:
-                - modified:'netsuite/main.py'
+                - 'netsuite/main.py'
 
         - name: Install Serverless Framework
+          if: steps.filter.outputs.urd == 'true' || steps.filter.netsuite == 'true'
           run: npm i -g serverless
         
         - name: Install GCP Cloud Functions Serverless Plug-In
+          if: steps.filter.outputs.urd == 'true' || steps.filter.netsuite == 'true'
           run: serverless plugin install -n serverless-google-cloudfunctions
 
         - name: Configure netsuite Serverless Project ID
