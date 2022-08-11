@@ -5,7 +5,7 @@ on:
 
 jobs:
   deploy-production:
-      environment: Production
+      environment: production
       name: Deploy Production (main)
       runs-on: ubuntu-latest
       if: github.ref == 'refs/heads/main' # this deploys to different projects since it is production
@@ -67,7 +67,7 @@ jobs:
             sudo serverless deploy
 
   deploy-staging:
-      environment: Staging
+      environment: staging
       name: Deploy Staging (Develop)
       runs-on: ubuntu-latest
       if: github.ref == 'refs/heads/develop' # this deploys both to production since they are in staging.
