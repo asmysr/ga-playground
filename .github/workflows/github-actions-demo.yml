@@ -21,7 +21,6 @@ jobs:
                 - modified:'netsuite/main.py'
 
         - name: Install Serverless Framework
-          if: steps.filter.outputs.netsuite == 'true'
           run: npm i -g serverless
         
         - name: Install GCP Cloud Functions Serverless Plug-In
